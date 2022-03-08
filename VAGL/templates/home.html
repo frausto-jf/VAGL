@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Agregar productos</h2>
+                    <form class="py-2" method="POST"> 
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Agregar" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h2>Listado de productos</h2>
+
+            <form class="d-flex py-2">
+                <input class="form-control me-2" type="search" placeholder="Buscar">
+                <button class="btn btn-success" type="submit">Buscar</button>
+            </form>
+
+            <div class="table-responsive py-2">
+                <table class="table  table-hover table-bordered text-center">  
+                    <thead class="table table-primary fw-bold">
+                        <td>Id</td>
+                        <td>Nombre del producto</td>
+                        <td>Precio</td>
+                        <td>Cantidad</td>
+                        <td>Opciones</td>
+                    </thead> 
+                    
+                    <tbody>
+                        {% for c in productos %}
+                        <tr>
+                            <td>{{c.id}}</td>
+                            <td>{{c.nombre_del_producto}}</td>
+                            <td>{{c.precio}}</td>
+                            <td>{{c.cantidad}}</td>
+                            <td>
+                                <div class="container px-1">
+                                    <div class="row gx-1">
+                                      <div class="col">
+                                        <a href="modificarProducto/{{c.id}}" class="btn btn-success">Modificar</a>
+                                      </div>
+                                      <div class="col">
+                                        <a href="eliminarProducto/{{c.id}}" class="btn btn-danger">Eliminar</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+            
+            
+                </table>
+            </div>
+        </div>
+    </div>                    
+{% endblock %}
